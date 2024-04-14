@@ -1,8 +1,8 @@
 GIT_VER := $(shell git describe --tags)
 DATE := $(shell date +%Y-%m-%dT%H:%M:%S%z)
 
-feature-proxy: *.go cmd/*.go go.mod go.sum
-	CGO_ENABLED=0 go build -ldflags "-X main.Version=$(GIT_VER) -X main.buildDate=$(DATE)" -o feature-proxy ./cmd/main.go
+feature-proxy: cmd/*.go go.mod go.sum
+	CGO_ENABLED=0 go build -o feature-proxy ./cmd/main.go
 
 clean:
 	rm -rf dist/* feature-proxy
