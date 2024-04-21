@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net"
 	"net/http"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -20,14 +21,14 @@ type ReverseProxy struct {
 	BaseDomain    string
 }
 
-func NewReverseProxy(schema string, baseDomain string, defaultSubdomain string, headerName string) *ReverseProxy {
+func NewReverseProxy(schema string, baseDomain string, defaultSubdomain string, headerName string, port int) *ReverseProxy {
 	director := func(req *http.Request) {
 		subDomain := req.Header.Get(headerName)
 		if subDomain == "" {
 			subDomain = defaultSubdomain
 		}
 		req.URL.Scheme = schema
-		req.URL.Host = subDomain + "." + baseDomain
+		req.URL.Host = subDomain + "." + baseDomain + ":" + strconv.Itoa(port)
 	}
 	return &ReverseProxy{Director: director, BaseDomain: baseDomain}
 }
