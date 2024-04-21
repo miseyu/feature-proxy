@@ -8,11 +8,11 @@ var c *Config
 
 type Config struct {
 	Port             int    `envconfig:"PORT" default:"18080"`
-	ProxyPort        int    `envconfig:"PORT" default:"443"`
+	OriginPort       int    `envconfig:"ORIGIN_PORT" default:"443"`
 	OriginBaseDomain string `envconfig:"ORIGIN_BASE_DOMAIN"`
+	OriginScheme     string `envconfig:"ORIGIN_SCHEME" default:"http"`
 	DefaultSubDomain string `envconfig:"DEFAULT_SUB_DOMAIN"`
 	FeatureHeader    string `envconfig:"FEATURE_HEADER" default:"X-Feature"`
-	OriginScheme     string `envconfig:"ORIGIN_SCHEME" default:"http"`
 }
 
 func LoadConfig() *Config {
