@@ -21,7 +21,7 @@ func main() {
 		_, _ = w.Write([]byte(`{"status":"ok"}`))
 		w.WriteHeader(http.StatusOK)
 	}))
-	proxy := pkg.NewReverseProxy(cfg.OriginScheme, cfg.OriginBaseDomain, cfg.DefaultSubDomain, cfg.FeatureHeader, cfg.ProxyPort)
+	proxy := pkg.NewReverseProxy(cfg.OriginScheme, cfg.OriginBaseDomain, cfg.DefaultSubDomain, cfg.FeatureHeader, cfg.OriginPort)
 	http.Handle("/", proxy)
 	listenHost := fmt.Sprintf(":%v", port)
 	slog.Info("Listen on", "host", listenHost)
