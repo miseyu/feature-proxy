@@ -26,6 +26,8 @@ func NewReverseProxy(schema string, baseDomain string, defaultSubdomain string, 
 		subDomain := req.Header.Get(headerName)
 		if subDomain == "" {
 			subDomain = defaultSubdomain
+		} else {
+			subDomain = strings.ReplaceAll(strings.ReplaceAll(strings.ToLower(subDomain), "/", "-"), ".", "-")
 		}
 		req.URL.Scheme = schema
 		req.URL.Host = subDomain + "." + baseDomain + ":" + strconv.Itoa(port)
@@ -99,7 +101,7 @@ func (p *ReverseProxy) copyResponse(dst io.Writer, src io.Reader) {
 
 	_, err := io.Copy(dst, src)
 	if err != nil {
-		slog.Warn("copyResponse, %s", err)
+		slog.Warn("copyResponse, %v", err)
 	}
 }
 
